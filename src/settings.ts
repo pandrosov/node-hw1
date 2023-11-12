@@ -88,7 +88,7 @@ app.post('/videos', (req: RequestWithBody<CreateVideoDto>, res: Response) => {
         availableResolutions.map(r => {
             !AvailableResolutions.includes(r) && errors.errorsMessages.push({
                 message: "Invalid resolution",
-                field: "title"
+                field: "availableResolutions"
             })
         })
     } else {
@@ -148,8 +148,8 @@ app.put('/videos/:id', (req: RequestWithBodyAndParams<Params, updateVideoDoTo>, 
     if (Array.isArray(availableResolutions)) {
         availableResolutions.map(r => {
             !AvailableResolutions.includes(r) && errors.errorsMessages.push({
-                message: "Invalid author",
-                field: "title"
+                message: "Invalid resolution",
+                field: "availableResolutions"
             })
         })
     } else {
@@ -159,7 +159,7 @@ app.put('/videos/:id', (req: RequestWithBodyAndParams<Params, updateVideoDoTo>, 
     if(typeof canBeDownloaded === "undefined") {
         canBeDownloaded = false
     }
-    if(typeof minAgeRestriction !== "number" && typeof minAgeRestriction === "undefined") {
+    if(typeof minAgeRestriction !== "undefined" && typeof minAgeRestriction === "number") {
         minAgeRestriction < 1 || minAgeRestriction > 18 && errors.errorsMessages.push({
             message: "Invalid minAgeRestriction",
             field: "minAgeRestriction"
@@ -187,6 +187,7 @@ app.put('/videos/:id', (req: RequestWithBodyAndParams<Params, updateVideoDoTo>, 
         availableResolutions,
         publicationDate: publicationDate ? publicationDate : video.publicationDate
     }
+
     videos.splice(videoIndex, 1, updatedItem)
 
     res.sendStatus(204)
