@@ -54,6 +54,7 @@ const videos = [
 
 
 app.get('/videos', (req: Request, res: Response) => {
+    res.sendStatus(200)
     res.send(videos)
 })
 
@@ -81,7 +82,7 @@ app.post('/videos', (req: RequestWithBody<CreateVideoDto>, res: Response) => {
     }
 
     if (!author || author.trim().length < 1 || author.trim().length > 20) {
-        errors.errorsMessages.push({ message: "Invalid author", field: "title" })
+        errors.errorsMessages.push({ message: "Invalid author", field: "author" })
     }
 
     if (Array.isArray(availableResolutions)) {
@@ -142,7 +143,7 @@ app.put('/videos/:id', (req: RequestWithBodyAndParams<Params, updateVideoDoTo>, 
     }
 
     if (!title || title.trim().length < 1 || title.trim().length > 20) {
-        errors.errorsMessages.push({ message: "Invalid author", field: "title" })
+        errors.errorsMessages.push({ message: "Invalid author", field: "author" })
     }
 
     if (Array.isArray(availableResolutions)) {
@@ -203,6 +204,12 @@ app.delete('/videos/:id', (req: RequestWithParams<Params>, res: Response) => {
     }
 
     videos.splice(videoIndex, 1)
+    res.sendStatus(204)
+    res.send()
+})
+
+app.delete('/testing/all-data', (req: Request, res: Response) => {
+    videos.splice(0, videos.length);
     res.sendStatus(204)
     res.send()
 })

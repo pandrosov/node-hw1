@@ -23,6 +23,7 @@ const videos = [
     }
 ];
 exports.app.get('/videos', (req, res) => {
+    res.sendStatus(200);
     res.send(videos);
 });
 exports.app.get('/videos/:id', (req, res) => {
@@ -43,7 +44,7 @@ exports.app.post('/videos', (req, res) => {
         errors.errorsMessages.push({ message: "Invalid title", field: "title" });
     }
     if (!author || author.trim().length < 1 || author.trim().length > 20) {
-        errors.errorsMessages.push({ message: "Invalid author", field: "title" });
+        errors.errorsMessages.push({ message: "Invalid author", field: "author" });
     }
     if (Array.isArray(availableResolutions)) {
         availableResolutions.map(r => {
@@ -86,7 +87,7 @@ exports.app.put('/videos/:id', (req, res) => {
         errors.errorsMessages.push({ message: "Invalid title", field: "title" });
     }
     if (!title || title.trim().length < 1 || title.trim().length > 20) {
-        errors.errorsMessages.push({ message: "Invalid author", field: "title" });
+        errors.errorsMessages.push({ message: "Invalid author", field: "author" });
     }
     if (Array.isArray(availableResolutions)) {
         availableResolutions.map(r => {
@@ -136,6 +137,11 @@ exports.app.delete('/videos/:id', (req, res) => {
         return;
     }
     videos.splice(videoIndex, 1);
+    res.sendStatus(204);
+    res.send();
+});
+exports.app.delete('/testing/all-data', (req, res) => {
+    videos.splice(0, videos.length);
     res.sendStatus(204);
     res.send();
 });
