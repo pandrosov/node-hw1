@@ -105,6 +105,12 @@ exports.app.put('/videos/:id', (req, res) => {
             field: "canBeDownloaded"
         });
     }
+    if (typeof publicationDate !== "undefined" && typeof publicationDate !== "string") {
+        errors.errorsMessages.push({
+            message: "Invalid publicationDate",
+            field: "publicationDate"
+        });
+    }
     if (typeof minAgeRestriction !== "undefined" && typeof minAgeRestriction === "number") {
         minAgeRestriction < 1 || minAgeRestriction > 18 && errors.errorsMessages.push({
             message: "Invalid minAgeRestriction",
