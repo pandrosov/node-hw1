@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express"
+import {type} from "os";
 
 
 export const app = express()
@@ -141,7 +142,7 @@ app.put('/videos/:id', (req: RequestWithBodyAndParams<Params, updateVideoDoTo>, 
         errors.errorsMessages.push({ message: "Invalid title", field: "title" })
     }
 
-    if (!title || title.trim().length < 1 || title.trim().length > 20) {
+    if (!author || author.trim().length < 1 || author.trim().length > 20) {
         errors.errorsMessages.push({ message: "Invalid author", field: "author" })
     }
 
@@ -156,9 +157,13 @@ app.put('/videos/:id', (req: RequestWithBodyAndParams<Params, updateVideoDoTo>, 
         availableResolutions = []
     }
 
-    if(typeof canBeDownloaded === "undefined") {
-        canBeDownloaded = false
+    if(typeof canBeDownloaded !== "undefined" && typeof canBeDownloaded !== "boolean") {
+        errors.errorsMessages.push({
+            message: "Invalid canBeDownloaded",
+            field: "canBeDownloaded"
+        })
     }
+
     if(typeof minAgeRestriction !== "undefined" && typeof minAgeRestriction === "number") {
         minAgeRestriction < 1 || minAgeRestriction > 18 && errors.errorsMessages.push({
             message: "Invalid minAgeRestriction",
