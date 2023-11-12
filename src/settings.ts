@@ -39,22 +39,21 @@ type ErrorMessageType = {
 
 const videos = [
     {
-        id: 1,
-        title: "string",
-        author: "string",
-        canBeDownloaded: true,
-        minAgeRestriction: null,
-        createdAt: "2023-11-06T15:58:22.363Z",
-        publicationDate: "2023-11-06T15:58:22.363Z",
-        availableResolutions: [
-            "P144"
+        "id": 1699799676506,
+        "title": "hello",
+        "author": "PA",
+        "canBeDownloaded": false,
+        "minAgeRestriction": null,
+        "createdAt": "2023-11-12T14:34:36.504Z",
+        "publicationDate": "2023-11-13T14:34:36.504Z",
+        "availableResolutions": [
+            "P480"
         ]
     }
 ]
 
 
 app.get('/videos', (req: Request, res: Response) => {
-    res.sendStatus(200)
     res.send(videos)
 })
 
@@ -193,6 +192,11 @@ app.put('/videos/:id', (req: RequestWithBodyAndParams<Params, updateVideoDoTo>, 
     res.sendStatus(204)
 })
 
+app.delete('/testing/all-data', (req: Request, res: Response) => {
+    videos.splice(0, videos.length);
+    res.sendStatus(204)
+})
+
 app.delete('/videos/:id', (req: RequestWithParams<Params>, res: Response) => {
     const id = +req.params.id
 
@@ -204,12 +208,6 @@ app.delete('/videos/:id', (req: RequestWithParams<Params>, res: Response) => {
     }
 
     videos.splice(videoIndex, 1)
-    res.sendStatus(204)
-    res.send()
-})
-
-app.delete('/testing/all-data', (req: Request, res: Response) => {
-    videos.splice(0, videos.length);
     res.sendStatus(204)
     res.send()
 })

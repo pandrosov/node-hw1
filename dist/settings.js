@@ -10,20 +10,19 @@ exports.app.use(express_1.default.json());
 const AvailableResolutions = ["P144", "P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"];
 const videos = [
     {
-        id: 1,
-        title: "string",
-        author: "string",
-        canBeDownloaded: true,
-        minAgeRestriction: null,
-        createdAt: "2023-11-06T15:58:22.363Z",
-        publicationDate: "2023-11-06T15:58:22.363Z",
-        availableResolutions: [
-            "P144"
+        "id": 1699799676506,
+        "title": "hello",
+        "author": "PA",
+        "canBeDownloaded": false,
+        "minAgeRestriction": null,
+        "createdAt": "2023-11-12T14:34:36.504Z",
+        "publicationDate": "2023-11-13T14:34:36.504Z",
+        "availableResolutions": [
+            "P480"
         ]
     }
 ];
 exports.app.get('/videos', (req, res) => {
-    res.sendStatus(200);
     res.send(videos);
 });
 exports.app.get('/videos/:id', (req, res) => {
@@ -129,6 +128,10 @@ exports.app.put('/videos/:id', (req, res) => {
     videos.splice(videoIndex, 1, updatedItem);
     res.sendStatus(204);
 });
+exports.app.delete('/testing/all-data', (req, res) => {
+    videos.splice(0, videos.length);
+    res.sendStatus(204);
+});
 exports.app.delete('/videos/:id', (req, res) => {
     const id = +req.params.id;
     const videoIndex = videos.findIndex(v => v.id === id);
@@ -137,11 +140,6 @@ exports.app.delete('/videos/:id', (req, res) => {
         return;
     }
     videos.splice(videoIndex, 1);
-    res.sendStatus(204);
-    res.send();
-});
-exports.app.delete('/testing/all-data', (req, res) => {
-    videos.splice(0, videos.length);
     res.sendStatus(204);
     res.send();
 });
